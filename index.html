@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Italy Udaipur - Authentic Italian Dining Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #121212;
+            --secondary: #E8DCCF;
+            --accent: #6B7D5C;
+            --highlight: #C8A96A;
+            --background: #F7F5F2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--highlight);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: #B89A5F;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(200, 169, 106, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section {
+            height: 100vh;
+            min-height: 600px;
+            background-image: linear-gradient(rgba(18, 18, 18, 0.5), rgba(18, 18, 18, 0.5)), url('https://api.kuse.ai/api/folder/v1/file/04786bca86a26e9f5ddd617c33b5d9e71600f9ed5f395edea31e1762bdcf4e22_2442407.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .dish-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .dish-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .dish-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .dish-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .floating-cta {
+                display: block;
+            }
+        }
+
+        .section-padding {
+            padding: 80px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 60px 20px;
+            }
+        }
+
+        .quote-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white" style="font-family: 'Playfair Display', serif;">Little Italy</h1>
+            <div class="hidden md:flex gap-8 items-center">
+                <a href="#home" class="text-white hover:text-[#C8A96A] transition-colors">Home</a>
+                <a href="#menu" class="text-white hover:text-[#C8A96A] transition-colors">Menu</a>
+                <a href="#about" class="text-white hover:text-[#C8A96A] transition-colors">About</a>
+                <a href="#gallery" class="text-white hover:text-[#C8A96A] transition-colors">Gallery</a>
+                <a href="#contact" class="text-white hover:text-[#C8A96A] transition-colors">Contact</a>
+                <a href="tel:09094595000" class="btn-primary">Reserve a Table</a>
+            </div>
+            <button class="md:hidden text-white text-2xl" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-[#121212] z-[999] transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col h-full p-8">
+            <button class="self-end text-white text-3xl mb-8" onclick="toggleMobileMenu()">×</button>
+            <a href="#home" onclick="toggleMobileMenu()" class="text-white text-xl mb-6 hover:text-[#C8A96A] transition-colors">Home</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="text-white text-xl mb-6 hover:text-[#C8A96A] transition-colors">Menu</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="text-white text-xl mb-6 hover:text-[#C8A96A] transition-colors">About</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="text-white text-xl mb-6 hover:text-[#C8A96A] transition-colors">Gallery</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="text-white text-xl mb-6 hover:text-[#C8A96A] transition-colors">Contact</a>
+            <a href="tel:09094595000" class="btn-primary mt-4">Reserve a Table</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in">Experience Italy in the Heart of Udaipur</h1>
+            <p class="text-xl md:text-2xl mb-8 fade-in" style="animation-delay: 0.2s;">Authentic Italian flavors, cozy ambiance, and unforgettable dining moments.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8 fade-in" style="animation-delay: 0.4s;">
+                <a href="tel:09094595000" class="btn-primary">Reserve a Table</a>
+                <a href="#menu" class="btn-secondary">View Menu</a>
+            </div>
+            <div class="flex items-center justify-center gap-2 text-white fade-in" style="animation-delay: 0.6s;">
+                <span class="text-2xl">⭐</span>
+                <span class="text-lg">4.6 Rating | Loved by Hundreds of Food Lovers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <img src="https://raw.githubusercontent.com/webwithk/littleitaly/main/images/WhatsApp%20Image%202026-03-23%20at%206.33.23%20PM.jpeg" alt="Little Italy Interior" class="rounded-16px shadow-xl w-full h-[500px] object-cover" style="border-radius: 16px;">
+                </div>
+                <div class="fade-in">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6" style="color: var(--primary);">Where Taste Meets Experience</h2>
+                    <p class="text-lg mb-4 leading-relaxed" style="color: #4a4a4a;">Little Italy Udaipur brings you a refined Italian dining experience with a modern touch. From handcrafted pastas to wood-fired pizzas, every dish is made with passion and authenticity.</p>
+                    <p class="text-lg mb-8 leading-relaxed" style="color: #4a4a4a;">Whether it's a romantic dinner, family gathering, or casual meet-up — we create moments that feel special.</p>
+                    <a href="#menu" class="btn-primary">Explore Our Menu</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section-padding" style="background: var(--background);">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--primary);">Our Signature Creations</h2>
+                <p class="text-xl" style="color: #666;">Handcrafted with passion, served with love</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Dish 1 -->
+                <div class="dish-card fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/c2a1edc775363c3b68e4f87b34dd5454c6addb948a829cd4a3f7abf1ac9e6aaa_2442404.jpeg" alt="Cannelloni Alla Fiorentina">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--primary);">Cannelloni Alla Fiorentina</h3>
+                        <p style="color: #666;">Rich spinach and ricotta filled pasta in creamy tomato sauce</p>
+                    </div>
+                </div>
+
+                <!-- Dish 2 -->
+                <div class="dish-card fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/e849e58753d5b58e6c7d4e917698eb9e9e33bbcb5fe572ffdfcc27481b4fcc66_2442403.jpeg" alt="Risotto Funghi e Zafferano">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--primary);">Risotto Funghi e Zafferano</h3>
+                        <p style="color: #666;">Creamy saffron-infused risotto with wild mushrooms</p>
+                    </div>
+                </div>
+
+                <!-- Dish 3 -->
+                <div class="dish-card fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/6eb1dd6f94b627279e08564dbdfb8fdde11efdb1f9c032c45ce016fa4d9cc970_2442402.jpeg" alt="Lasagne Alle Verdure">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--primary);">Lasagne Alle Verdure</h3>
+                        <p style="color: #666;">Layers of fresh vegetables, pasta, and rich béchamel</p>
+                    </div>
+                </div>
+
+                <!-- Dish 4 -->
+                <div class="dish-card fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/d1b4bded30f00360c1444cd8f72910ac781a36cd8d648c026f20a74159cc31ee_2442406.jpeg" alt="Tiramisu">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--primary);">Tiramisu</h3>
+                        <p style="color: #666;">Classic Italian dessert with coffee-soaked ladyfingers</p>
+                    </div>
+                </div>
+
+                <!-- Dish 5 -->
+                <div class="dish-card fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/ff60da6b73037a3a31042405483f5e8f98a2ab8ddd20209a3afb7b8c99f3b941_2442420.jpeg" alt="Chocolate Bomb">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--primary);">Chocolate Bomb</h3>
+                        <p style="color: #666;">Decadent molten chocolate lava cake with vanilla ice cream</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-8 fade-in">
+                <div class="flex flex-wrap justify-center gap-4 mb-8 text-lg">
+                    <span>🍕 Italian Classics</span>
+                    <span>🍹 Cocktails</span>
+                    <span>🍸 Mocktails</span>
+                    <span>🍰 Desserts</span>
+                </div>
+                <a href="tel:09094595000" class="btn-primary">Explore Full Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--primary);">Why Little Italy?</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="feature-card fade-in">
+                    <div class="text-5xl mb-4">🇮🇹</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary);">Authentic Italian Recipes</h3>
+                    <p style="color: #666;">Traditional flavors from Italy</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="text-5xl mb-4">🌿</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary);">Vegan & Vegetarian Friendly</h3>
+                    <p style="color: #666;">Delicious options for everyone</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="text-5xl mb-4">🪵</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary);">Premium Cozy Ambiance</h3>
+                    <p style="color: #666;">Warm and inviting atmosphere</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary);">Fast & Friendly Service</h3>
+                    <p style="color: #666;">Exceptional hospitality</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="text-5xl mb-4">📸</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--primary);">Instagram-worthy Interiors</h3>
+                    <p style="color: #666;">Every corner is picture-perfect</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section-padding" style="background: var(--background);">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--primary);">Every Corner Tells a Story</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/2100cf4f48a78b84a35146c47fddcaf8ed56073c8c4c44289beb36cce739f9bc_2442461.jpeg" alt="Pizza Oven" class="gallery-img">
+                </div>
+                <div class="fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/36f1e8ba3a15835f4c4540b395bc8665e480e35a9684ea447109a83cc1e0075d_2442481.jpeg" alt="Cocktails" class="gallery-img">
+                </div>
+                <div class="fade-in">
+                    <img src="https://api.kuse.ai/api/folder/v1/file/9112740b5a2fcd4075bbf047ef156e4ef603df40f0b40069c27fe8060a20958c_2442490.jpeg" alt="Table Setting" class="gallery-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--primary);">What Our Guests Say</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="review-card fade-in">
+                    <div class="text-3xl mb-4">⭐⭐⭐⭐⭐</div>
+                    <p class="quote-text text-lg mb-4" style="color: #4a4a4a;">"Amazing ambiance and delicious food! Perfect spot for a romantic dinner."</p>
+                    <p class="font-semibold" style="color: var(--highlight);">- Priya S.</p>
+                </div>
+
+                <div class="review-card fade-in">
+                    <div class="text-3xl mb-4">⭐⭐⭐⭐⭐</div>
+                    <p class="quote-text text-lg mb-4" style="color: #4a4a4a;">"Best Italian restaurant in Udaipur! The risotto was absolutely divine."</p>
+                    <p class="font-semibold" style="color: var(--highlight);">- Rahul M.</p>
+                </div>
+
+                <div class="review-card fade-in">
+                    <div class="text-3xl mb-4">⭐⭐⭐⭐⭐</div>
+                    <p class="quote-text text-lg mb-4" style="color: #4a4a4a;">"Perfect place for dinner dates! Beautiful interiors and incredible service."</p>
+                    <p class="font-semibold" style="color: var(--highlight);">- Anjali K.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section id="contact" class="section-padding" style="background: var(--background);">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: var(--primary);">Visit Us</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="fade-in">
+                    <div class="bg-white p-8 rounded-16px shadow-lg" style="border-radius: 16px;">
+                        <h3 class="text-2xl font-bold mb-6" style="color: var(--primary);">Contact Information</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2 text-lg" style="color: var(--accent);">📍 Address</h4>
+                            <p style="color: #4a4a4a;">1, Ashok Vihar, opposite Celebration Mall, Udaipur</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-2 text-lg" style="color: var(--accent);">📞 Phone</h4>
+                            <p style="color: #4a4a4a;">09094595000</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="font-semibold mb-2 text-lg" style="color: var(--accent);">🕐 Hours</h4>
+                            <p style="color: #4a4a4a;">12:30 PM – 11:00 PM (Daily)</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="tel:09094595000" class="btn-primary text-center">Call Now</a>
+                            <a href="https://maps.app.goo.gl/UKyavu6yd79fQtbC6" target="_blank" class="btn-secondary text-center" style="color: var(--primary); border-color: var(--primary);">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3627.234!2d73.7068!3d24.5854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDM1JzA3LjQiTiA3M8KwNDInMjQuNSJF!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="450" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="section-padding" style="background: linear-gradient(135deg, #121212 0%, #2a2a2a 100%); color: white;">
+        <div class="max-w-4xl mx-auto px-4 text-center fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready for a memorable dining experience?</h2>
+            <p class="text-xl mb-8" style="color: var(--secondary);">Reserve your table and step into Italy</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="tel:09094595000" class="btn-primary">Book Your Table Now</a>
+                <a href="#menu" class="btn-secondary">View Menu</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#121212] text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Little Italy Udaipur</h3>
+                    <p style="color: var(--secondary);">Authentic Italian dining in the heart of Udaipur</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Quick Links</h4>
+                    <div class="flex flex-col gap-2">
+                        <a href="#home" class="hover:text-[#C8A96A] transition-colors">Home</a>
+                        <a href="#menu" class="hover:text-[#C8A96A] transition-colors">Menu</a>
+                        <a href="#about" class="hover:text-[#C8A96A] transition-colors">About</a>
+                        <a href="#contact" class="hover:text-[#C8A96A] transition-colors">Contact</a>
+                        <a href="#gallery" class="hover:text-[#C8A96A] transition-colors">Gallery</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Contact Info</h4>
+                    <div class="flex flex-col gap-2" style="color: var(--secondary);">
+                        <p>📞 09094595000</p>
+                        <p>📍 1, Ashok Vihar, Udaipur</p>
+                        <p>🕐 12:30 PM – 11:00 PM</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-lg">Follow Us</h4>
+                    <div class="flex gap-4 text-2xl">
+                        <a href="https://www.instagram.com/littleitalyudaipur?igsh=MTdqcGFvNm5tdzBkcw==" class="hover:text-[#C8A96A] transition-colors">📷</a>
+                        <a href="#" class="hover:text-[#C8A96A] transition-colors">📘</a>
+                        <a href="https://wa.me/919094595000" class="hover:text-[#C8A96A] transition-colors">💬</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p style="color: var(--secondary);" class="mb-4">© 2024 Little Italy Udaipur. All rights reserved.</p>
+               
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating CTA Button (Mobile) -->
+    <a href="tel:09094595000" class="floating-cta btn-primary">Reserve Table</a>
+
+    <script>
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: `0px 0px -100px 0px`
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add(`visible`);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll(`.fade-in`).forEach(el => observer.observe(el));
+
+        // Navbar scroll effect
+        window.addEventListener(`scroll`, () => {
+            const navbar = document.querySelector(`.nav-bar`);
+            if (window.scrollY > 100) {
+                navbar.classList.add(`scrolled`);
+            } else {
+                navbar.classList.remove(`scrolled`);
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById(`mobileMenu`);
+            menu.classList.toggle(`translate-x-full`);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll(`a[href^="#"]`).forEach(anchor => {
+            anchor.addEventListener(`click`, function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute(`href`));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: `smooth`,
+                        block: `start`
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.kuse.ai/sdk.prd.js"></script>
+</body>
+</html>
